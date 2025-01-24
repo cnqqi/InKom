@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Item</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        .jumbotron {
+            background: linear-gradient(to right, #007bff, #00aaff);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="jumbotron text-center">
+            <h1>Update Item</h1>
+            <p class="lead">Modify the details of your inventory item below.</p>
+        </div>
+        <nav class="d-flex justify-content-end">
+            <div class="btn-group">
+                <a class="btn btn-secondary btn-sm" href="/">Back to Dashboard</a>
+                <a class="btn btn-danger btn-sm" href="/logout">Logout</a>
+            </div>
+        </nav>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="namaBarang" class="form-label">Item Name:</label>
+                <input type="text" class="form-control" id="namaBarang" name="namaBarang" value="{{ item[1] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="kodeBarang" class="form-label">Item Code:</label>
+                <input type="text" class="form-control" id="kodeBarang" name="kodeBarang" value="{{ item[2] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="jumlahBarang" class="form-label">Quantity:</label>
+                <input type="number" class="form-control" id="jumlahBarang" name="jumlahBarang" value="{{ item[3] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="kondisiBarang" class="form-label">Condition:</label>
+                <select class="form-select" id="kondisiBarang" name="kondisiBarang" required>
+                    <option value="New" {% if item[4] == 'New' %} selected {% endif %}>New</option>
+                    <option value="Used" {% if item[4] == 'Used' %} selected {% endif %}>Used</option>
+                    <option value="Damaged" {% if item[4] == 'Damaged' %} selected {% endif %}>Damaged</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="gambarBarang" class="form-label">Item Image (Optional):</label>
+                <input type="file" class="form-control" id="gambarBarang" name="gambarBarang" accept="image/*">
+                {% if item[5] %}
+                    <img src="{{ url_for('static', filename='images/' + item[5]) }}" alt="Item Image" class="mt-2" width="150">
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Update Item</button>
+                <a class="btn btn-secondary" href="/inventory">Back to List</a>
+            </div>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>
